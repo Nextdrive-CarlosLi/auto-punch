@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "auto-punch"
+version = "0.1.0"
+description = "Standalone CLI for scheduled Apollo HR punch-in/out on weekdays"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "holidays>=0.50",
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest>=8.0",
+    "freezegun>=1.5",
+]
+
+[project.scripts]
+auto-punch = "auto_punch.cli.main:main"
+
+[tool.setuptools.packages.find]
+include = ["auto_punch*"]
+exclude = ["tests*"]
+
+[tool.setuptools.package-data]
+"auto_punch.launchd" = ["*.plist.tmpl"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
