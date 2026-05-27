@@ -14,6 +14,15 @@ curl -fsSL https://raw.githubusercontent.com/Nextdrive-CarlosLi/auto-punch/main/
 
 Requires Python 3.11+ and macOS.
 
+## Uninstall
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/Nextdrive-CarlosLi/auto-punch/main/uninstall.sh | bash
+```
+
+Removes the launchd plists, the pipx package, and `~/.config/auto-punch/`
+(credentials + cookies + log).
+
 ## First-time setup
 
 ```bash
