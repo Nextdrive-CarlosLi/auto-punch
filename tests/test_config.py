@@ -42,6 +42,21 @@ def test_load_config_missing_key(env_path):
         load_config()
 
 
+def test_load_config_without_cookies_is_ok(env_path):
+    """APOLLO_COOKIES must not be required: on first login the file exists
+    with credentials but cookies haven't been fetched yet, and run/status
+    handle empty cookies by triggering refresh_cookies()."""
+    _write_env(env_path, [
+        "APOLLO_COMPANY_CODE=acme",
+        "APOLLO_USERNAME=alice",
+        "APOLLO_PASSWORD=secret",
+        "AUTO_PUNCH_SECRET=s",
+        "AUTO_PUNCH_LOG=/tmp/x.log",
+    ])
+    cfg = load_config()
+    assert cfg.cookies == ""
+
+
 def test_write_config_creates_file(env_path):
     write_config({"APOLLO_COMPANY_CODE": "acme", "APOLLO_USERNAME": "alice"})
     text = env_path.read_text()

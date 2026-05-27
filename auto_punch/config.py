@@ -50,10 +50,13 @@ _REQUIRED = (
     "APOLLO_COMPANY_CODE",
     "APOLLO_USERNAME",
     "APOLLO_PASSWORD",
-    "APOLLO_COOKIES",
     "AUTO_PUNCH_SECRET",
     "AUTO_PUNCH_LOG",
 )
+# APOLLO_COOKIES is intentionally NOT required: on first run (post-`login`) it
+# may be absent, and the run/status flows handle empty cookies by calling
+# refresh_cookies(). Apollo() raises ApolloAuthError on empty cookies, which
+# triggers that refresh path.
 
 
 def load_config() -> Config:
@@ -73,7 +76,7 @@ def load_config() -> Config:
         company_code=raw["APOLLO_COMPANY_CODE"],
         username=raw["APOLLO_USERNAME"],
         password=raw["APOLLO_PASSWORD"],
-        cookies=raw["APOLLO_COOKIES"],
+        cookies=raw.get("APOLLO_COOKIES", ""),
         cookies_updated_at=raw.get("APOLLO_COOKIES_UPDATED_AT", ""),
         secret=raw["AUTO_PUNCH_SECRET"],
         log_path=Path(raw["AUTO_PUNCH_LOG"]).expanduser(),

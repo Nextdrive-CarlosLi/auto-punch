@@ -30,7 +30,6 @@ def login_command(args) -> int:
         "APOLLO_PASSWORD": password,
         "AUTO_PUNCH_SECRET": secrets.token_hex(16),
         "AUTO_PUNCH_LOG": str(DEFAULT_CONFIG_PATH.parent / "auto_punch.log"),
-        "APOLLO_COOKIES": "",  # placeholder so load_config doesn't complain mid-refresh
     })
 
     print("Running OAuth login + BPM handshake...")
