@@ -22,7 +22,9 @@ _die()  { _err "$@"; exit 1; }
 
 _on_exit() {
     local rc=$?
-    [ $rc -ne 0 ] && _err "install aborted (exit $rc)"
+    if [ "$rc" -ne 0 ]; then
+        _err "install aborted (exit $rc)"
+    fi
 }
 trap _on_exit EXIT
 
