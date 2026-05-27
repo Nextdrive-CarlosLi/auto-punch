@@ -2,14 +2,17 @@
 
 Standalone CLI for scheduled Apollo HR clock-in / clock-out on weekdays.
 
-Replaces the apollo-skill-dependent `auto-punch` directory with a self-contained
-Python package — no external script paths to wire, just `pipx install`.
+Runs on macOS via `launchd`, fires at 9:00 / 18:00 Mon–Fri with a deterministic
+per-day random offset so punch times look natural. Skips weekends, TW public
+holidays, days marked as leave, and slots already punched.
 
 ## Install
 
 ```bash
-pipx install ~/work/auto-punch
+curl -fsSL https://raw.githubusercontent.com/Nextdrive-CarlosLi/auto-punch/main/install.sh | bash
 ```
+
+Requires Python 3.11+ and macOS.
 
 ## First-time setup
 
@@ -30,7 +33,7 @@ auto-punch install-launchd     # writes morning + evening plists, runs smoke tes
 auto-punch uninstall-launchd   # reverses the above
 ```
 
-The plists fire at 9:00 / 18:00 each day. Each invocation:
+Each invocation:
 - Skips weekends, TW public holidays, days marked as leave, and slots already
   punched (logged, no notification).
 - Computes a deterministic per-day offset in `[-10, +20]` minutes so punch
@@ -58,5 +61,3 @@ python3 -m venv .venv
 .venv/bin/pip install -e .[test]
 .venv/bin/pytest
 ```
-
-See `docs/superpowers/specs/2026-05-26-standalone-cli-design.md` for design.
