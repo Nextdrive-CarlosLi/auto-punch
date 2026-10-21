@@ -2,8 +2,9 @@
 
 Standalone CLI for scheduled Apollo HR clock-in / clock-out on weekdays.
 
-Runs on macOS via `launchd`, fires at 9:00 / 18:00 Mon–Fri with a deterministic
-per-day random offset so punch times look natural. Skips weekends, TW public
+Runs on macOS via `launchd`, fires at 8:50 / 17:50 Mon–Fri and sleeps until
+9:00 / 18:00 plus a deterministic per-day random offset (−10 to +20 min) so
+punch times look natural. Skips weekends, TW public
 holidays, days marked as leave, and slots already punched.
 
 ## Install
