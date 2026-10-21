@@ -82,7 +82,7 @@ cat <<EOF
 Next steps:
   1. auto-punch login                       # interactive credential setup
   2. auto-punch run --type in --dry-run     # verify decision logic
-  3. auto-punch install-launchd             # set up 09:00 / 18:00 cron
+  3. auto-punch install-launchd             # set up 08:50 / 17:50 cron
 
 Docs: https://github.com/Nextdrive-CarlosLi/auto-punch
 EOF

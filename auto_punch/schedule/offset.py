@@ -7,10 +7,13 @@ from __future__ import annotations
 import hashlib
 from datetime import date
 
+MIN_OFFSET = -10
+MAX_OFFSET = 20
+
 
 def compute_offset(today: date, secret: str) -> int:
     """Return offset in minutes ∈ [-10, +20]."""
     payload = f"{today.isoformat()}|{secret}".encode()
     digest = hashlib.sha256(payload).digest()
-    bucket = int.from_bytes(digest[:4], "big") % 31
-    return bucket - 10
+    bucket = int.from_bytes(digest[:4], "big") % (MAX_OFFSET - MIN_OFFSET + 1)
+    return bucket + MIN_OFFSET

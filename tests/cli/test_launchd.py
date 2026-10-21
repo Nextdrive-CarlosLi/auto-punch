@@ -67,3 +67,20 @@ def test_uninstall_removes_plists_and_runs_unload(fake_launchagents):
         rc = uninstall_launchd_command(SimpleNamespace())
     assert rc == 0
     assert list(fake_launchagents.iterdir()) == []
+
+
+@pytest.mark.parametrize("label, baseline", [
+    ("com.carlos.auto-punch.morning", (9, 0)),
+    ("com.carlos.auto-punch.evening", (18, 0)),
+])
+def test_plist_fires_before_earliest_target(label, baseline):
+    """launchd must fire at or before baseline + MIN_OFFSET, else negative
+    offsets wake up past target + grace (woke_up_late)."""
+    import plistlib
+    from auto_punch.cli.launchd import _render_template
+    from auto_punch.schedule.offset import MIN_OFFSET
+
+    plist = plistlib.loads(_render_template(f"{label}.plist.tmpl", "/x", "/y").encode())
+    fire = plist["StartCalendarInterval"]
+    fire_min = fire["Hour"] * 60 + fire["Minute"]
+    assert fire_min <= baseline[0] * 60 + baseline[1] + MIN_OFFSET
